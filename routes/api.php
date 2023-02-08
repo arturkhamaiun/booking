@@ -1,6 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\CreateReservation;
+use App\Http\Controllers\IssueToken;
+use App\Http\Controllers\ShowReservations;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/token', IssueToken::class);
+Route::middleware('auth:sanctum')->group(function (Router $router) {
+    $router->get('/reservations', ShowReservations::class);
+    $router->post('/reservations', CreateReservation::class);
 });

@@ -3,7 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\User;
+use App\Models\Vacancy;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,11 +18,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        User::factory()->create([
+            'name' => 'Janusz Kowalski',
+            'email' => 'janusz@example.com',
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        User::factory()->create([
+            'name' => 'Leszek Kozłowski',
+            'email' => 'leszek@example.com',
+        ]);
+
+        now()->toPeriod(now()->addYear())->forEach(function (Carbon $date) {
+            Vacancy::create([
+                'date' => $date,
+                'total' => rand(0, 10),
+            ]);
+        });
     }
 }
