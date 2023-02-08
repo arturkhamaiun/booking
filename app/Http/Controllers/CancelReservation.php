@@ -20,7 +20,7 @@ class CancelReservation extends Controller
      */
     public function __invoke(Request $request, Reservation $reservation): Response
     {
-        $this->authorize('cancel' , $reservation);
+        $this->authorize('cancel', $reservation);
 
         abort_if(
             $reservation->status === ReservationStatus::CANCELLED->value,
