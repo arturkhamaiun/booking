@@ -16,7 +16,6 @@ class ReservationResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user' => new UserResource($this->user),
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'created_at' => $this->created_at,

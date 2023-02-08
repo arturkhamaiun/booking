@@ -29,9 +29,6 @@ class CreateReservationTest extends FeatureTestCase
         $response->assertJsonStructure([
             'data' => [
                 'id',
-                'user' => [
-                    'name',
-                ],
                 'start_date',
                 'end_date',
                 'created_at',
@@ -75,9 +72,6 @@ class CreateReservationTest extends FeatureTestCase
         $response->assertJsonStructure([
             'data' => [
                 'id',
-                'user' => [
-                    'name',
-                ],
                 'start_date',
                 'end_date',
                 'created_at',

@@ -28,9 +28,6 @@ class ShowReservationsTest extends FeatureTestCase
             'data' => [
                 [
                     'id',
-                    'user' => [
-                        'name',
-                    ],
                     'start_date',
                     'end_date',
                     'created_at',
