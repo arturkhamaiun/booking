@@ -14,6 +14,9 @@ docker run --rm \
 # Start containers
 ./vendor/bin/sail up -d
 
+# Wait
+sleep 5
+
 # Run migrations and seed data
 ./vendor/bin/sail artisan migrate:refresh --seed
 
