@@ -1,0 +1,20 @@
+echo 'Installing...'
+
+# Copy .env file
+cp .env.example .env
+
+# Install composer dependencies
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    laravelsail/php82-composer:latest \
+    composer install --ignore-platform-reqs
+
+# Start containers
+./vendor/bin/sail up -d
+
+# Run migrations and seed data
+./vendor/bin/sail artisan migrate:refresh --seed
+
+echo 'Finished!'
