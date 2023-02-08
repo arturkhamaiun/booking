@@ -17,12 +17,14 @@ class CancelReservationTest extends FeatureTestCase
         $vacancy = Vacancy::create([
             'date' => $tomorrow,
             'total' => 0,
+            'price' => 100,
         ]);
         $reservation = Reservation::create([
             'start_date' => $tomorrow,
             'end_date' => $tomorrow,
             'user_id' => $user->id,
             'status' => ReservationStatus::NEW,
+            'price' => 100,
         ]);
 
         $response = $this->actingAs($user)->put("/api/reservations/{$reservation->id}/cancel");
@@ -48,6 +50,7 @@ class CancelReservationTest extends FeatureTestCase
             'end_date' => $now,
             'user_id' => $user->id,
             'status' => ReservationStatus::NEW,
+            'price' => 100,
         ]);
 
         $response = $this->actingAs($user)->put("/api/reservations/{$reservation->id}/cancel");
@@ -65,6 +68,7 @@ class CancelReservationTest extends FeatureTestCase
             'end_date' => $now,
             'user_id' => $user->id,
             'status' => ReservationStatus::NEW,
+            'price' => 100,
         ]);
 
         $response = $this->actingAs($anotherUser)->put("/api/reservations/{$reservation->id}/cancel");
@@ -81,6 +85,7 @@ class CancelReservationTest extends FeatureTestCase
             'end_date' => $tomorrow,
             'user_id' => $user->id,
             'status' => ReservationStatus::CANCELLED,
+            'price' => 100,
         ]);
 
         $response = $this->actingAs($user)->put("/api/reservations/{$reservation->id}/cancel");

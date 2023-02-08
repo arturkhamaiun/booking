@@ -12,15 +12,17 @@ class CreateReservationTest extends FeatureTestCase
 {
     public function test_create_reservation_for_one_day()
     {
+
         $user = User::factory()->create();
         Vacancy::create([
-            'date' => '2050-01-01',
+            'date' => now(),
             'total' => 1,
+            'price' => 100,
         ]);
 
         $response = $this->actingAs($user)->post('/api/reservations', [
-            'start_date' => "2050-01-01",
-            'end_date' => "2050-01-01",
+            'start_date' => now(),
+            'end_date' => now(),
         ]);
 
         $response->assertStatus(201);
@@ -33,15 +35,19 @@ class CreateReservationTest extends FeatureTestCase
                 'start_date',
                 'end_date',
                 'created_at',
+                'updated_at',
+                'status',
+                'price',
             ],
         ]);
         $this->assertDatabaseHas((new Reservation())->getTable(), [
-            'start_date' => '2050-01-01',
-            'end_date' => '2050-01-01',
+            'start_date' => now()->toDateString(),
+            'end_date' => now()->toDateString(),
             'user_id' => $user->id,
+            'price' => 100,
         ]);
         $this->assertDatabaseHas((new Vacancy())->getTable(), [
-            'date' => '2050-01-01',
+            'date' => now()->toDateString(),
             'total' => 0,
         ]);
     }
@@ -49,12 +55,14 @@ class CreateReservationTest extends FeatureTestCase
     public function test_create_reservation_for_any_amount_of_days()
     {
         $user = User::factory()->create();
-        $randomPeriod = now()->toPeriod(now()->addDays(rand(1, 10)));
+        $randomInt = rand(1, 10);
+        $randomPeriod = now()->toPeriod(now()->addDays($randomInt));
 
         $randomPeriod->forEach(function (Carbon $date) {
             Vacancy::create([
                 'date' => $date,
                 'total' => 1,
+                'price' => 10
             ]);
         });
 
@@ -73,12 +81,16 @@ class CreateReservationTest extends FeatureTestCase
                 'start_date',
                 'end_date',
                 'created_at',
+                'updated_at',
+                'status',
+                'price',
             ],
         ]);
         $this->assertDatabaseHas((new Reservation())->getTable(), [
             'start_date' => $randomPeriod->getStartDate()->toDateString(),
             'end_date' => $randomPeriod->getEndDate()->toDateString(),
             'user_id' => $user->id,
+            'price' => ($randomInt + 1) * 10
         ]);
 
         $randomPeriod->forEach(function ($date) {

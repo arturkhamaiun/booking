@@ -9,5 +9,6 @@ class Vacancy extends Model
     protected $fillable = [
         'date',
         'total',
+        'price',
     ];
 }

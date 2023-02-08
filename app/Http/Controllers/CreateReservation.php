@@ -39,9 +39,10 @@ class CreateReservation extends Controller
             $startDate,
             $endDate,
         ) {
-            $vacanciesQuery->lockForUpdate();
+            /** @var \Illuminate\Support\Collection $vacancies */
+            $vacancies = $vacanciesQuery->lockForUpdate()->get();
 
-            throw_if($vacanciesQuery->count() !== $requiredVacanciesCount, $someVacanciesAreNotAvailableException);
+            throw_if($vacancies->count() !== $requiredVacanciesCount, $someVacanciesAreNotAvailableException);
 
             $vacanciesQuery->decrement('total');
 
@@ -49,7 +50,8 @@ class CreateReservation extends Controller
                 'start_date' => $startDate,
                 'end_date' => $endDate,
                 'user_id' => $request->user()->id,
-                'status' => ReservationStatus::NEW
+                'status' => ReservationStatus::NEW,
+                'price' => $vacancies->reduce(fn (int $carry, Vacancy $vacancy) => $carry + $vacancy->price, 0)
             ]);
         });
 

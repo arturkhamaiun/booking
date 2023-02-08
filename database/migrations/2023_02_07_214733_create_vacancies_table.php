@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->date('date')->unique();
             $table->integer('total');
+            $table->integer('price');
             $table->timestamps();
         });
     }

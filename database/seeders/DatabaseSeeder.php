@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             Vacancy::create([
                 'date' => $date,
                 'total' => rand(0, 10),
+                'price' =>  rand(1, 100)
             ]);
         });
     }

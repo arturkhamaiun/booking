@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->string('status');
+            $table->integer('price');
             $table->foreignIdFor(User::class);
             $table->timestamps();
         });

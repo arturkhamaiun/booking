@@ -18,6 +18,7 @@ class ShowReservationsTest extends FeatureTestCase
             'end_date' => now()->addDay(),
             'user_id' => $user->id,
             'status' => ReservationStatus::NEW,
+            'price' => 100
         ]);
 
         $response = $this->actingAs($user)->get('/api/reservations');
@@ -33,7 +34,9 @@ class ShowReservationsTest extends FeatureTestCase
                     'start_date',
                     'end_date',
                     'created_at',
+                    'updated_at',
                     'status',
+                    'price',
                 ]
             ],
             'links',
@@ -50,6 +53,7 @@ class ShowReservationsTest extends FeatureTestCase
             'end_date' => now()->addDay(),
             'user_id' => $user->id,
             'status' => ReservationStatus::NEW,
+            'price' => 100,
         ]);
 
         $response = $this->actingAs($otherUser)->get('/api/reservations');
