@@ -23,7 +23,7 @@ class CancelReservation extends Controller
         $this->authorize('cancel', $reservation);
 
         abort_if(
-            $reservation->status === ReservationStatus::CANCELLED->value,
+            $reservation->status === ReservationStatus::CANCELLED,
             400,
             'Reservation is already cancelled.'
         );
