@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ReservationStatus;
 use App\Http\Requests\CreateReservationRequest;
 use App\Http\Resources\ReservationResource;
 use App\Models\Reservation;
@@ -25,7 +26,7 @@ class CreateReservation extends Controller
         $startDate = Carbon::parse($request->start_date)->toDateString();
         $endDate = Carbon::parse($request->end_date)->toDateString();
         $requiredVacanciesCount = CarbonPeriod::create($request->start_date, $request->end_date)->count();
-        $vacanciesQuery = Vacancy::whereBetween("date", [$startDate, $endDate])->where("total", ">", 0);
+        $vacanciesQuery = Vacancy::whereBetween('date', [$startDate, $endDate])->where("total", ">", 0);
         $someVacanciesAreNotAvailableException = ValidationException::withMessages([
             'start_date' => ['Some vacancies between provided start and end date are not available.'],
         ]);
@@ -48,6 +49,7 @@ class CreateReservation extends Controller
                 'start_date' => $startDate,
                 'end_date' => $endDate,
                 'user_id' => $request->user()->id,
+                'status' => ReservationStatus::NEW
             ]);
         });
 

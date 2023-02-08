@@ -151,6 +151,27 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "cancel reservation",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/api/reservations/1/cancel",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"reservations",
+						"1",
+						"cancel"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {

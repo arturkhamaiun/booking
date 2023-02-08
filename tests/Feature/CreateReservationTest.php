@@ -5,21 +5,11 @@ namespace Tests\Feature;
 use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Vacancy;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
-use Tests\TestCase;
+use Tests\FeatureTestCase;
 
-class CreateReservationTest extends TestCase
+class CreateReservationTest extends FeatureTestCase
 {
-    use RefreshDatabase;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->withHeader('Accept', 'application/json');
-    }
-
     public function test_create_reservation_for_one_day()
     {
         $user = User::factory()->create();

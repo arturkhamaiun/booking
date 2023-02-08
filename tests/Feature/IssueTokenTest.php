@@ -3,21 +3,11 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
-use Tests\TestCase;
+use Tests\FeatureTestCase;
 
-class IssueTokenTest extends TestCase
+class IssueTokenTest extends FeatureTestCase
 {
-    use RefreshDatabase;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->withHeader('Accept', 'application/json');
-    }
-
     public function test_issue_token()
     {
         User::factory()->create([

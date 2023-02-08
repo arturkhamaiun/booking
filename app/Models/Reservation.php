@@ -13,6 +13,7 @@ class Reservation extends Model
         'start_date',
         'end_date',
         'user_id',
+        'status'
     ];
 
     public function user(): BelongsTo

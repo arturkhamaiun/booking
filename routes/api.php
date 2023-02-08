@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CancelReservation;
 use App\Http\Controllers\CreateReservation;
 use App\Http\Controllers\IssueToken;
 use App\Http\Controllers\ShowReservations;
@@ -21,4 +22,5 @@ Route::post('/token', IssueToken::class);
 Route::middleware('auth:sanctum')->group(function (Router $router) {
     $router->get('/reservations', ShowReservations::class);
     $router->post('/reservations', CreateReservation::class);
+    $router->put('/reservations/{reservation}/cancel', CancelReservation::class);
 });

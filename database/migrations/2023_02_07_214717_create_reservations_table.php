@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->date('start_date');
             $table->date('end_date');
+            $table->string('status');
             $table->foreignIdFor(User::class);
             $table->timestamps();
         });
