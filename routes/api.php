@@ -22,5 +22,5 @@ Route::post('/token', IssueToken::class);
 Route::middleware('auth:sanctum')->group(function (Router $router) {
     $router->get('/reservations', ShowReservations::class);
     $router->post('/reservations', CreateReservation::class);
-    $router->put('/reservations/{reservation}/cancel', CancelReservation::class);
+    $router->put('/reservations/{id}/cancel', CancelReservation::class);
 });
