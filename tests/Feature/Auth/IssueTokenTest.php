@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Auth;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +15,7 @@ class IssueTokenTest extends FeatureTestCase
             'password' => Hash::make('super-secure-password')
         ]);
 
-        $response = $this->post('/api/token', [
+        $response = $this->post(route('token.issue'), [
             'email' => 'test@example.com',
             'password' => 'super-secure-password',
         ]);
@@ -32,7 +32,7 @@ class IssueTokenTest extends FeatureTestCase
             'password' => Hash::make('super-secure-password')
         ]);
 
-        $response = $this->post('/api/token', [
+        $response = $this->post(route('token.issue'), [
             'email' => 'test@example.com',
             'password' => 'random-password',
         ]);

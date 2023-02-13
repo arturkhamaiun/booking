@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Reservation;
 
 use App\Enums\ReservationStatus;
 use App\Models\Reservation;
@@ -27,7 +27,7 @@ class CancelReservationTest extends FeatureTestCase
             'price' => 100,
         ]);
 
-        $response = $this->actingAs($user)->put("/api/reservations/{$reservation->id}/cancel");
+        $response = $this->actingAs($user)->put(route('reservations.cancel', ['id' => $reservation->id]));
 
         $response->assertStatus(204);
 
@@ -53,7 +53,7 @@ class CancelReservationTest extends FeatureTestCase
             'price' => 100,
         ]);
 
-        $response = $this->actingAs($user)->put("/api/reservations/{$reservation->id}/cancel");
+        $response = $this->actingAs($user)->put(route('reservations.cancel', ['id' => $reservation->id]));
 
         $response->assertStatus(403);
     }
@@ -71,7 +71,7 @@ class CancelReservationTest extends FeatureTestCase
             'price' => 100,
         ]);
 
-        $response = $this->actingAs($anotherUser)->put("/api/reservations/{$reservation->id}/cancel");
+        $response = $this->actingAs($anotherUser)->put(route('reservations.cancel', ['id' => $reservation->id]));
 
         $response->assertStatus(403);
     }
@@ -88,7 +88,7 @@ class CancelReservationTest extends FeatureTestCase
             'price' => 100,
         ]);
 
-        $response = $this->actingAs($user)->put("/api/reservations/{$reservation->id}/cancel");
+        $response = $this->actingAs($user)->put(route('reservations.cancel', ['id' => $reservation->id]));
 
         $response->assertStatus(400);
     }

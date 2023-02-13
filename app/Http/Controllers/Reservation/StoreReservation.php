@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Reservation;
 
 use App\Enums\ReservationStatus;
-use App\Http\Requests\CreateReservationRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Reservation\StoreReservationRequest;
 use App\Http\Resources\ReservationResource;
 use App\Models\Reservation;
 use App\Models\Vacancy;
@@ -13,15 +14,15 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
-class CreateReservation extends Controller
+class StoreReservation extends Controller
 {
     /**
      * Handle the incoming request.
      *
-     * @param  \App\Http\Requests\CreateReservationRequest  $request
+     * @param  \App\Http\Requests\StoreReservationRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function __invoke(CreateReservationRequest $request): JsonResponse
+    public function __invoke(StoreReservationRequest $request): JsonResponse
     {
         $startDate = Carbon::parse($request->start_date)->toDateString();
         $endDate = Carbon::parse($request->end_date)->toDateString();

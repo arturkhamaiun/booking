@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Reservation;
 
 use App\Enums\ReservationStatus;
+use App\Http\Controllers\Controller;
 use App\Models\Reservation;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;

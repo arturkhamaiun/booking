@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Reservation;
 
 use App\Enums\ReservationStatus;
 use App\Models\Reservation;
@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\FeatureTestCase;
 
-class ShowReservationsTest extends FeatureTestCase
+class ListReservationsTest extends FeatureTestCase
 {
     public function test_show_reservations()
     {
@@ -21,7 +21,7 @@ class ShowReservationsTest extends FeatureTestCase
             'price' => 100
         ]);
 
-        $response = $this->actingAs($user)->get('/api/reservations');
+        $response = $this->actingAs($user)->get(route('reservations.list'));
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -53,7 +53,7 @@ class ShowReservationsTest extends FeatureTestCase
             'price' => 100,
         ]);
 
-        $response = $this->actingAs($otherUser)->get('/api/reservations');
+        $response = $this->actingAs($otherUser)->get(route('reservations.list'));
 
         $response->assertStatus(200);
         $response->assertJson(function (AssertableJson $assertableJson) {

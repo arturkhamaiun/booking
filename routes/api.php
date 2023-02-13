@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\CancelReservation;
-use App\Http\Controllers\CreateReservation;
-use App\Http\Controllers\IssueToken;
-use App\Http\Controllers\ShowReservations;
+use App\Http\Controllers\Reservation\CancelReservation;
+use App\Http\Controllers\Reservation\StoreReservation;
+use App\Http\Controllers\Auth\IssueToken;
+use App\Http\Controllers\Reservation\ListReservations;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 
@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/token', IssueToken::class);
+Route::post('/token', IssueToken::class)->name('token.issue');
 Route::middleware('auth:sanctum')->group(function (Router $router) {
-    $router->get('/reservations', ShowReservations::class);
-    $router->post('/reservations', CreateReservation::class);
-    $router->put('/reservations/{id}/cancel', CancelReservation::class);
+    $router->get('/reservations', ListReservations::class)->name('reservations.list');
+    $router->post('/reservations', StoreReservation::class)->name('reservations.store');
+    $router->put('/reservations/{id}/cancel', CancelReservation::class)->name('reservations.cancel');
 });

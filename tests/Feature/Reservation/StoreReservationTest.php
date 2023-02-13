@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Reservation;
 
 use App\Models\Reservation;
 use App\Models\User;
@@ -8,11 +8,10 @@ use App\Models\Vacancy;
 use Illuminate\Support\Carbon;
 use Tests\FeatureTestCase;
 
-class CreateReservationTest extends FeatureTestCase
+class StoreReservationTest extends FeatureTestCase
 {
     public function test_create_reservation_for_one_day()
     {
-
         $user = User::factory()->create();
         Vacancy::create([
             'date' => now(),
@@ -20,7 +19,7 @@ class CreateReservationTest extends FeatureTestCase
             'price' => 100,
         ]);
 
-        $response = $this->actingAs($user)->post('/api/reservations', [
+        $response = $this->actingAs($user)->post(route('reservations.store'), [
             'start_date' => now(),
             'end_date' => now(),
         ]);
@@ -63,7 +62,7 @@ class CreateReservationTest extends FeatureTestCase
             ]);
         });
 
-        $response = $this->actingAs($user)->post('/api/reservations', [
+        $response = $this->actingAs($user)->post(route('reservations.store'), [
             'start_date' => $randomPeriod->getStartDate(),
             'end_date' => $randomPeriod->getEndDate(),
         ]);
@@ -97,7 +96,7 @@ class CreateReservationTest extends FeatureTestCase
 
     public function test_reservation_start_dane_is_required()
     {
-        $response = $this->actingAs(User::factory()->create())->post('/api/reservations', [
+        $response = $this->actingAs(User::factory()->create())->post(route('reservations.store'), [
             'start_date' => now(),
         ]);
 
@@ -106,7 +105,7 @@ class CreateReservationTest extends FeatureTestCase
 
     public function test_reservation_end_dane_is_required()
     {
-        $response = $this->actingAs(User::factory()->create())->post('/api/reservations', [
+        $response = $this->actingAs(User::factory()->create())->post(route('reservations.store'), [
             'end_date' => now(),
         ]);
 
@@ -115,7 +114,7 @@ class CreateReservationTest extends FeatureTestCase
 
     public function test_reservation_start_date_must_be_greater_or_equals_end_date()
     {
-        $response = $this->actingAs(User::factory()->create())->post('/api/reservations', [
+        $response = $this->actingAs(User::factory()->create())->post(route('reservations.store'), [
             'start_date' => now()->addDay(),
             'end_date' => now(),
         ]);
@@ -125,7 +124,7 @@ class CreateReservationTest extends FeatureTestCase
 
     public function test_reservation_fails_if_there_no_vacancies_available()
     {
-        $response = $this->actingAs(User::factory()->create())->post('/api/reservations', [
+        $response = $this->actingAs(User::factory()->create())->post(route('reservations.store'), [
             'start_date' => now(),
             'end_date' => now(),
         ]);
