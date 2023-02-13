@@ -18,23 +18,23 @@ class CancelReservation extends Controller
      * @param  \App\Models\Reservation  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request, Reservation $reservation): Response
+    public function __invoke(Request $request, string $id): Response
     {
-        $this->authorize('cancel', $reservation);
+        DB::transaction(function () use ($id) {
+            $reservation = Reservation::whereId($id)->lockForUpdate()->firstOrFail();
+            $vacanciesQuery = Vacancy::whereBetween('date', [$reservation->start_date, $reservation->end_date]);
 
-        abort_if(
-            $reservation->status === ReservationStatus::CANCELLED,
-            400,
-            'Reservation is already cancelled.'
-        );
-
-        $vacanciesQuery = Vacancy::whereBetween('date', [$reservation->start_date, $reservation->end_date]);
-
-        DB::transaction(function () use ($reservation, $vacanciesQuery) {
             $vacanciesQuery->lockForUpdate()->count();
 
-            $vacanciesQuery->increment('total');
+            $this->authorize('cancel', $reservation);
 
+            abort_if(
+                $reservation->status === ReservationStatus::CANCELLED,
+                400,
+                'Reservation is already cancelled.'
+            );
+
+            $vacanciesQuery->increment('total');
             $reservation->update(['status' => ReservationStatus::CANCELLED]);
         });
 

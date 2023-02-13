@@ -20,4 +20,7 @@ sleep 5
 # Run migrations and seed data
 ./vendor/bin/sail artisan migrate:refresh --seed
 
+# Generate app key
+./vendor/bin/sail artisan key:generate
+
 echo 'Finished!'
